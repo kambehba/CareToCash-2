@@ -1,0 +1,6 @@
+type Member @model {
+  id: ID!
+  name: String!
+  balance: Float
+  owner: String!
+}
