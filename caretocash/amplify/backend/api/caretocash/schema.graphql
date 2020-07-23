@@ -4,3 +4,12 @@ type Member @model {
   balance: Float
   owner: String!
 }
+
+type Transaction @model {
+  id: ID!
+  name: String!
+  owner: Float!
+  date: AWSDate!
+  amount: Float!
+  info: String!
+}

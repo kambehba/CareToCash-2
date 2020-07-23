@@ -1,0 +1,39 @@
+.sendButton {
+  margin-left: 8rem;
+  align-self: center;
+  width: 450px;
+  margin-top: 20px;
+}
+
+.inputBox {
+  color: green;
+  font-weight: bold;
+  font-size: x-large;
+  margin-top: 1.5rem;
+  width: 250px;
+}
+
+.memberName {
+  color: rgb(74, 74, 175);
+  text-align: left;
+}
+
+.dollarSign {
+  color: green;
+  font-size: xx-large;
+  margin-left: 8rem;
+  margin-top: 1rem;
+  font-weight: bolder;
+}
+
+.transactioType {
+  margin-left: 2rem;
+}
+
+.info {
+  margin-left: 8rem;
+  color: blue;
+  margin-top: 2rem;
+  width: 450px;
+  font-weight: bold;
+}

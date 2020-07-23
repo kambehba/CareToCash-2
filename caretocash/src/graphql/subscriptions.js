@@ -37,3 +37,45 @@ export const onDeleteMember = /* GraphQL */ `
     }
   }
 `;
+export const onCreateTransaction = /* GraphQL */ `
+  subscription OnCreateTransaction {
+    onCreateTransaction {
+      id
+      name
+      owner
+      date
+      amount
+      info
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateTransaction = /* GraphQL */ `
+  subscription OnUpdateTransaction {
+    onUpdateTransaction {
+      id
+      name
+      owner
+      date
+      amount
+      info
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteTransaction = /* GraphQL */ `
+  subscription OnDeleteTransaction {
+    onDeleteTransaction {
+      id
+      name
+      owner
+      date
+      amount
+      info
+      createdAt
+      updatedAt
+    }
+  }
+`;

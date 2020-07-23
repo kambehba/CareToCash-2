@@ -32,3 +32,38 @@ export const listMembers = /* GraphQL */ `
     }
   }
 `;
+export const getTransaction = /* GraphQL */ `
+  query GetTransaction($id: ID!) {
+    getTransaction(id: $id) {
+      id
+      name
+      owner
+      date
+      amount
+      info
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listTransactions = /* GraphQL */ `
+  query ListTransactions(
+    $filter: ModelTransactionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listTransactions(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        owner
+        date
+        amount
+        info
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;

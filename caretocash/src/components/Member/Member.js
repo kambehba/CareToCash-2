@@ -1,27 +1,48 @@
 import React from "react";
-import classes from "../Member/member.css";
+import { makeStyles } from "@material-ui/core/styles";
+import { Grid, Paper } from "@material-ui/core";
 
-function Member(props) {
+import "../Member/member.css";
+
+const useStyles = makeStyles((theme) => ({
+  grid: {
+    width: "100%",
+    margin: "0px",
+  },
+
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+  },
+}));
+
+const Member = (props) => {
+  const classes = useStyles();
   return (
-    <div className="test2" key={props.id}>
-      {props.name} , Balance: {props.balance}{" "}
-      <span>
-        <button className="btn btn-success test" onClick={props.creditClicked}>
+    <Grid container spacing={2} className={classes.grid}>
+      <Grid item xs={6}>
+        <Paper className={classes.paper}>
+          <h1 className="name">{props.name}</h1> <h1> Current Balance:</h1>
+          <h1 className="balance"> ${props.balance}</h1>
+        </Paper>
+      </Grid>
+
+      <Grid item xs={6}>
+        <button className="btn btn-success b1" onClick={props.creditClicked}>
           Credit
         </button>
-      </span>
-      <span>
-        <button className="btn btn-danger test" onClick={props.chargeClicked}>
+        <button className="btn btn-danger b1" onClick={props.chargeClicked}>
           Charge
         </button>
-      </span>
-      <span>
-        <button className="btn btn-warning test" onClick={props.detailsClicked}>
+        <button className="btn btn-warning b1" onClick={props.detailsClicked}>
           Details
         </button>
-      </span>
-    </div>
+        <button className="btn btn-dark b1" onClick={props.deleteClicked}>
+          Delete Members
+        </button>
+      </Grid>
+    </Grid>
   );
-}
+};
 
 export default Member;

@@ -1,8 +1,12 @@
-.test {
-  margin-left: 30px;
-  margin-right: 10px;
+.b1 {
+  margin: 10px;
 }
 
-.test2 {
-  margin-top: 3rem;
+.name {
+  color: blue;
+}
+
+.balance {
+  color: green;
+  font-size: xx-large;
 }
