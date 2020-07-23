@@ -1,2 +1,3 @@
 # CareToCash-2
-Angular Front End with AWS Server-less GraphQL Backend API 
+React Front End with AWS Serveless GraphQL Backend API.
+This is a Reward System for Parents to eaily credit or charge their Kids base on their Care.
