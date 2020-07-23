@@ -38,9 +38,9 @@ export const getTransaction = /* GraphQL */ `
       id
       name
       owner
-      date
       amount
       info
+      date
       createdAt
       updatedAt
     }
@@ -57,9 +57,9 @@ export const listTransactions = /* GraphQL */ `
         id
         name
         owner
-        date
         amount
         info
+        date
         createdAt
         updatedAt
       }

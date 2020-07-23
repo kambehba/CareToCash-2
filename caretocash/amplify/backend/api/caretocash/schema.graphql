@@ -8,8 +8,8 @@ type Member @model {
 type Transaction @model {
   id: ID!
   name: String!
-  owner: Float!
-  date: AWSDate!
+  owner: String!
   amount: Float!
   info: String!
+  date: String!
 }

@@ -23,7 +23,10 @@ const Member = (props) => {
       <Grid item xs={6}>
         <Paper className={classes.paper}>
           <h1 className="name">{props.name}</h1> <h1> Current Balance:</h1>
-          <h1 className="balance"> ${props.balance}</h1>
+          <h1 className="balance">
+            {" "}
+            <span className={props.balanceSign}>${props.balance}</span>
+          </h1>
         </Paper>
       </Grid>
 

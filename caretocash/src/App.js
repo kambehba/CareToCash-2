@@ -1,25 +1,18 @@
 import React, { Component } from "react";
-
 import { withAuthenticator } from "aws-amplify-react";
-
 import { API, graphqlOperation, auth0SignInButton, a } from "aws-amplify";
-
+import { listMembers } from "./graphql/queries";
+import Amplify, { Auth } from "aws-amplify";
+import Members from "./components/Members/Members";
+import Transaction from "./components/Transaction/transaction";
+import member from "./components/Member/Member";
+import members from "./components/Members/Members";
 import {
   createMember,
   updateMember,
   deleteMember,
   createTransaction,
 } from "./graphql/mutations";
-
-import { listMembers } from "./graphql/queries";
-
-import Amplify, { Auth } from "aws-amplify";
-
-import Members from "./components/Members/Members";
-
-import Transaction from "./components/Transaction/transaction";
-import member from "./components/Member/Member";
-import members from "./components/Members/Members";
 
 class App extends Component {
   state = {
@@ -34,12 +27,18 @@ class App extends Component {
       info: "",
     },
     members: [],
+    newMember: "",
     authuser: "",
     showMainPage: true,
     showTransactionPage: false,
     transactionType: "",
     credit: 0,
     charge: 0,
+    todayDate: "",
+  };
+
+  setMember = (event) => {
+    this.setState({ newMember: event.target.value });
   };
 
   async getAuthUser() {
@@ -61,16 +60,10 @@ class App extends Component {
     this.setState({ members: allMembersByCurrentOwner });
   }
 
-  setMember = (event) => {
-    this.setState({
-      member: { ...this.state.member, name: event.target.value },
-    });
-  };
-
   addMemberHandler = async () => {
     this.state.member.owner = this.state.authuser;
     const newMember = {
-      name: this.state.member.name,
+      name: this.state.newMember,
       owner: this.state.member.owner,
       balance: this.state.member.balance,
     };
@@ -78,6 +71,12 @@ class App extends Component {
     const result = await API.graphql(
       graphqlOperation(createMember, { input: newMember })
     );
+    this.state.newMember = "";
+
+    this.setState({
+      member: this.state.member,
+      newMember: this.state.newMember,
+    });
     this.loadMembers();
   };
 
@@ -121,14 +120,14 @@ class App extends Component {
       }
     });
 
+    this.sendUpdate();
+    this.state.newMember = "";
+
     this.setState({
       showMainPage: this.state.showMainPage,
       showTransactionPage: this.state.showTransactionPage,
-      members: this.state.members,
-      member: this.state.member,
+      newMember: this.state.newMember,
     });
-
-    this.sendUpdate();
   };
 
   updateMemberHandler = async (item) => {
@@ -155,16 +154,51 @@ class App extends Component {
       graphqlOperation(updateMember, { input: input })
     );
 
+    const transaction = {
+      name: this.state.member.name,
+      owner: this.state.member.owner,
+      amount: this.state.member.balance,
+      info: this.state.transaction.info,
+      date: this.getTodaysDate(),
+    };
+
     const result2 = await API.graphql(
-      graphqlOperation(createTransaction, { input: input })
+      graphqlOperation(createTransaction, { input: transaction })
     );
   };
+
+  getTodaysDate() {
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    let dateObj = new Date();
+    let month = monthNames[dateObj.getMonth()];
+    let day = String(dateObj.getDate()).padStart(2, "0");
+    let year = dateObj.getFullYear();
+
+    return month + "\n" + day + "," + year;
+  }
 
   onInputChange = (event) => {
     if (this.state.transactionType == "Credit")
       this.state.credit = parseInt(event.target.value);
     if (this.state.transactionType == "Charge")
       this.state.charge = parseInt(event.target.value);
+  };
+
+  onInfoChange = (event) => {
+    this.state.transaction.info = event.target.value;
   };
 
   render() {
@@ -191,7 +225,7 @@ class App extends Component {
             type="text"
             className="pa2 f4"
             placeholder="Member Name"
-            value={this.state.member.name}
+            value={this.state.newMember}
             onChange={this.setMember}
           />
           <br></br>
@@ -210,6 +244,7 @@ class App extends Component {
             transactionType={this.state.transactionType}
             sendClick={this.sendTransaction}
             onInputChange={this.onInputChange}
+            onInfoChange={this.onInfoChange}
           />
         </div>
       );

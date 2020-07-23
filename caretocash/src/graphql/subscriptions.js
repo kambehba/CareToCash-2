@@ -43,9 +43,9 @@ export const onCreateTransaction = /* GraphQL */ `
       id
       name
       owner
-      date
       amount
       info
+      date
       createdAt
       updatedAt
     }
@@ -57,9 +57,9 @@ export const onUpdateTransaction = /* GraphQL */ `
       id
       name
       owner
-      date
       amount
       info
+      date
       createdAt
       updatedAt
     }
@@ -71,9 +71,9 @@ export const onDeleteTransaction = /* GraphQL */ `
       id
       name
       owner
-      date
       amount
       info
+      date
       createdAt
       updatedAt
     }

@@ -55,9 +55,9 @@ export const createTransaction = /* GraphQL */ `
       id
       name
       owner
-      date
       amount
       info
+      date
       createdAt
       updatedAt
     }
@@ -72,9 +72,9 @@ export const updateTransaction = /* GraphQL */ `
       id
       name
       owner
-      date
       amount
       info
+      date
       createdAt
       updatedAt
     }
@@ -89,9 +89,9 @@ export const deleteTransaction = /* GraphQL */ `
       id
       name
       owner
-      date
       amount
       info
+      date
       createdAt
       updatedAt
     }

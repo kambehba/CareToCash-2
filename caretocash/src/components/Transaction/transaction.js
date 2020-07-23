@@ -49,6 +49,8 @@ function Transaction(props) {
           className="info"
           type="text"
           placeholder="Reason for this Transaction ?"
+          value={props.info}
+          onChange={(event) => props.onInfoChange(event)}
         />
       </Grid>
 

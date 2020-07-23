@@ -10,3 +10,13 @@
   color: green;
   font-size: xx-large;
 }
+
+.balanceSignNegative {
+  color: red;
+  font-size: xx-large;
+}
+
+.balanceSignPositive {
+  color: green;
+  font-size: xx-large;
+}
