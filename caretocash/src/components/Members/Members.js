@@ -14,6 +14,7 @@ const members = (props) =>
         creditClicked={() => props.creditClicked(m.id, "Credit")}
         chargeClicked={() => props.chargeClicked(m.id, "Charge")}
         deleteClicked={() => props.deleteClicked(m.id)}
+        detailsClicked={() => props.detailsClicked(m.id)}
         name={m.name}
         balanceSign={balanceSign}
       ></Member>

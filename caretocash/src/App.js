@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { withAuthenticator } from "aws-amplify-react";
 import { API, graphqlOperation, auth0SignInButton, a } from "aws-amplify";
-import { listMembers } from "./graphql/queries";
+import { listMembers, listTransactions } from "./graphql/queries";
 import Amplify, { Auth } from "aws-amplify";
 import Members from "./components/Members/Members";
 import Transaction from "./components/Transaction/transaction";
+import Details from "./components/Details/details";
+
 import member from "./components/Member/Member";
 import members from "./components/Members/Members";
 import {
@@ -27,14 +29,27 @@ class App extends Component {
       info: "",
     },
     members: [],
+    transactions: [],
     newMember: "",
     authuser: "",
     showMainPage: true,
     showTransactionPage: false,
+    showDetailsPage: false,
     transactionType: "",
     credit: 0,
     charge: 0,
     todayDate: "",
+  };
+
+  hideAllPages = () => {
+    this.state.showMainPage = false;
+    this.state.showTransactionPage = false;
+    this.state.showDetailsPage = false;
+    this.setState({
+      showMainPage: this.state.showMainPage,
+      showTransactionPage: this.state.showTransactionPage,
+      showDetailsPage: this.state.showDetailsPage,
+    });
   };
 
   setMember = (event) => {
@@ -83,10 +98,10 @@ class App extends Component {
   openTransactionsByMemberId = (id, transactionType) => {
     const transactionMember = this.state.members.find((i) => i.id === id);
     this.state.transactionType = transactionType;
+    this.hideAllPages();
     this.setState({
       member: transactionMember,
       transactionType: this.state.transactionType,
-      showMainPage: false,
       showTransactionPage: true,
     });
   };
@@ -104,9 +119,8 @@ class App extends Component {
   };
 
   sendTransaction = (transactionType) => {
+    this.hideAllPages();
     this.state.showMainPage = true;
-    this.state.showTransactionPage = false;
-    this.setState({ credit: this.state.credit, charge: this.state.charge });
 
     this.state.members.map((item) => {
       if (item.id == this.state.member.id) {
@@ -122,12 +136,26 @@ class App extends Component {
 
     this.sendUpdate();
     this.state.newMember = "";
-
     this.setState({
       showMainPage: this.state.showMainPage,
       showTransactionPage: this.state.showTransactionPage,
       newMember: this.state.newMember,
+      credit: this.state.credit,
+      charge: this.state.charge,
     });
+  };
+
+  openDetailsByMemberId = (id) => {
+    const currentMember = this.state.members.find((m) => m.id == id);
+
+    this.hideAllPages();
+    this.state.showDetailsPage = true;
+
+    this.setState({
+      showDetailsPage: this.state.showDetailsPage,
+      member: currentMember,
+    });
+    this.getTransactionsByMember();
   };
 
   updateMemberHandler = async (item) => {
@@ -167,6 +195,18 @@ class App extends Component {
     );
   };
 
+  getTransactionsByMember = async () => {
+    const allTransactions = await API.graphql(
+      graphqlOperation(listTransactions)
+    );
+    const transactionOfCurrentUser = allTransactions.data.listTransactions.items.filter(
+      (x) =>
+        x.name == this.state.member.name && x.owner == this.state.member.owner
+    );
+
+    this.setState({ transactions: transactionOfCurrentUser });
+  };
+
   getTodaysDate() {
     const monthNames = [
       "January",
@@ -201,10 +241,18 @@ class App extends Component {
     this.state.transaction.info = event.target.value;
   };
 
+  backHomeClicked = () => {
+    alert("sd");
+    this.hideAllPages();
+    this.showMainPage = true;
+    this.setState({ showMainPage: this.showMainPage });
+  };
+
   render() {
     let members = null;
     let transaction = null;
     let addMember = null;
+    let details = null;
 
     if (this.state.showMainPage) {
       transaction = null;
@@ -214,6 +262,7 @@ class App extends Component {
             members={this.state.members}
             creditClicked={this.openTransactionsByMemberId}
             chargeClicked={this.openTransactionsByMemberId}
+            detailsClicked={this.openDetailsByMemberId}
             deleteClicked={this.deleteClicked}
           />
         </div>
@@ -250,6 +299,17 @@ class App extends Component {
       );
     }
 
+    if (this.state.showDetailsPage) {
+      details = (
+        <div className="flex flex-column items-left pa5">
+          <Details
+            transactions={this.state.transactions}
+            backHomeClicked={this.backHomeClicked}
+          ></Details>
+        </div>
+      );
+    }
+
     return (
       <div>
         <div className="flex flex-column items-center justify-center pa3 bg-washed-yellow b--hot-pink">
@@ -260,6 +320,7 @@ class App extends Component {
         {addMember}
         {members}
         {transaction}
+        {details}
       </div>
     );
   }
