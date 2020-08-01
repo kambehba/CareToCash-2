@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import { withAuthenticator } from "aws-amplify-react";
-import { API, graphqlOperation, auth0SignInButton, a } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 import { listMembers, listTransactions } from "./graphql/queries";
-import Amplify, { Auth } from "aws-amplify";
+import { Auth } from "aws-amplify";
 import Members from "./components/Members/Members";
 import Transaction from "./components/Transaction/transaction";
 import Details from "./components/Details/details";
-
-import member from "./components/Member/Member";
-import members from "./components/Members/Members";
+import "../src/App.css";
 import {
   createMember,
   updateMember,
@@ -44,13 +42,10 @@ class App extends Component {
   };
 
   hideAllPages = () => {
-    this.state.showMainPage = false;
-    this.state.showTransactionPage = false;
-    this.state.showDetailsPage = false;
     this.setState({
-      showMainPage: this.state.showMainPage,
-      showTransactionPage: this.state.showTransactionPage,
-      showDetailsPage: this.state.showDetailsPage,
+      showMainPage: false,
+      showTransactionPage: false,
+      showDetailsPage: false,
     });
   };
 
@@ -71,7 +66,7 @@ class App extends Component {
     //now load members by the Auth User
     const allMembers = await API.graphql(graphqlOperation(listMembers));
     const allMembersByCurrentOwner = allMembers.data.listMembers.items.filter(
-      (x) => x.owner == this.state.authuser
+      (x) => x.owner === this.state.authuser
     );
     this.setState({ members: allMembersByCurrentOwner });
   }
@@ -332,8 +327,11 @@ class App extends Component {
     return (
       <div>
         <div className="flex flex-column items-center justify-center pa3 bg-washed-yellow b--hot-pink">
+          {/* <h1 className="f1 dark-blue lh-solid">
+            CARE to CA<span style="color:green">$</span>H
+          </h1> */}
           <h1 className="f1 dark-blue lh-solid">
-            CARE to CA<span Style="color:green">$</span>H
+            CARE to CA<span className="s1">$</span>H
           </h1>
         </div>
         {addMember}
