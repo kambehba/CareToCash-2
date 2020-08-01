@@ -3,6 +3,7 @@ type Member @model {
   name: String!
   balance: Float
   owner: String!
+  transactionCounter: Float!
 }
 
 type Transaction @model {
@@ -10,6 +11,8 @@ type Transaction @model {
   name: String!
   owner: String!
   amount: Float!
+  endingBalance: Float!
   info: String!
   date: String!
+  order: Float!
 }

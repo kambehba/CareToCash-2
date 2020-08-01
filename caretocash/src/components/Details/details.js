@@ -7,15 +7,17 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-});
+import "../Details/details.css";
+// const useStyles = makeStyles({
+//   table: {
+//     minWidth: 350,
+//     width: 100,
+//     background: red,
+//   },
+// });
 
 const Details = (props) => {
-  const classes = useStyles();
+  //const classes = useStyles();
 
   return (
     <TableContainer component={Paper}>
@@ -23,21 +25,34 @@ const Details = (props) => {
         Back
       </button>
 
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
+      <Table className="table" aria-label="simple table">
+        <TableHead className="tableHead">
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell align="right">Amount</TableCell>
-            <TableCell align="right">Description</TableCell>
+            <TableCell>
+              <div className="tableHeadText">Date</div>
+            </TableCell>
+            <TableCell align="right">
+              {" "}
+              <div className="tableHeadText">Amount</div>
+            </TableCell>
+            <TableCell align="right">
+              {" "}
+              <div className="tableHeadText">Balance</div>
+            </TableCell>
+            <TableCell align="right">
+              {" "}
+              <div className="tableHeadText">Description</div>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {props.transactions.map((x) => (
-            <TableRow key={x.name}>
+            <TableRow key={x.id}>
               <TableCell component="th" scope="row">
                 {x.date}
               </TableCell>
               <TableCell align="right">{x.amount}</TableCell>
+              <TableCell align="right">{x.endingBalance}</TableCell>
               <TableCell align="right">{x.info}</TableCell>
             </TableRow>
           ))}

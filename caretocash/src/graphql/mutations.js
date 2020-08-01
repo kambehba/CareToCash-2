@@ -11,6 +11,7 @@ export const createMember = /* GraphQL */ `
       name
       balance
       owner
+      transactionCounter
       createdAt
       updatedAt
     }
@@ -26,6 +27,7 @@ export const updateMember = /* GraphQL */ `
       name
       balance
       owner
+      transactionCounter
       createdAt
       updatedAt
     }
@@ -41,6 +43,7 @@ export const deleteMember = /* GraphQL */ `
       name
       balance
       owner
+      transactionCounter
       createdAt
       updatedAt
     }
@@ -56,8 +59,10 @@ export const createTransaction = /* GraphQL */ `
       name
       owner
       amount
+      endingBalance
       info
       date
+      order
       createdAt
       updatedAt
     }
@@ -73,8 +78,10 @@ export const updateTransaction = /* GraphQL */ `
       name
       owner
       amount
+      endingBalance
       info
       date
+      order
       createdAt
       updatedAt
     }
@@ -90,8 +97,10 @@ export const deleteTransaction = /* GraphQL */ `
       name
       owner
       amount
+      endingBalance
       info
       date
+      order
       createdAt
       updatedAt
     }

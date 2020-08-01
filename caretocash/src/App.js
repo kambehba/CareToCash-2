@@ -18,7 +18,7 @@ import {
 
 class App extends Component {
   state = {
-    member: { id: "", name: "", owner: "", balance: 0 },
+    member: { id: "", name: "", owner: "", balance: 0, transactionCounter: 0 },
     transaction: {
       id: "",
       name: "",
@@ -26,7 +26,9 @@ class App extends Component {
       type: "",
       date: "",
       amount: "",
+      endingBalance: "",
       info: "",
+      order: 0,
     },
     members: [],
     transactions: [],
@@ -56,18 +58,17 @@ class App extends Component {
     this.setState({ newMember: event.target.value });
   };
 
-  async getAuthUser() {
-    const currentUser = await Auth.currentUserInfo();
-    this.state.authuser = currentUser.username;
-    this.setState({ authuser: currentUser.username });
-  }
-
   async componentDidMount() {
-    this.getAuthUser();
     this.loadMembers();
   }
 
   async loadMembers() {
+    //first get Authenticated User
+    const currentUser = await Auth.currentUserInfo();
+    this.state.authuser = currentUser.username;
+    this.setState({ authuser: currentUser.username });
+
+    //now load members by the Auth User
     const allMembers = await API.graphql(graphqlOperation(listMembers));
     const allMembersByCurrentOwner = allMembers.data.listMembers.items.filter(
       (x) => x.owner == this.state.authuser
@@ -81,6 +82,7 @@ class App extends Component {
       name: this.state.newMember,
       owner: this.state.member.owner,
       balance: this.state.member.balance,
+      transactionCounter: 0,
     };
 
     const result = await API.graphql(
@@ -124,13 +126,10 @@ class App extends Component {
 
     this.state.members.map((item) => {
       if (item.id == this.state.member.id) {
-        if (this.state.transactionType == transactionType) {
+        if (transactionType == "Credit")
           item.balance = item.balance + this.state.credit;
-        }
-
-        if (this.state.transactionType == transactionType) {
-          item.balance = item.balance - this.state.charge;
-        }
+        if (transactionType == "Charge")
+          item.balance = item.balance + this.state.charge;
       }
     });
 
@@ -142,6 +141,8 @@ class App extends Component {
       newMember: this.state.newMember,
       credit: this.state.credit,
       charge: this.state.charge,
+      members: this.state.members,
+      member: this.state.member,
     });
   };
 
@@ -185,13 +186,30 @@ class App extends Component {
     const transaction = {
       name: this.state.member.name,
       owner: this.state.member.owner,
-      amount: this.state.member.balance,
+      endingBalance: this.state.member.balance,
       info: this.state.transaction.info,
       date: this.getTodaysDate(),
+      order: this.state.member.transactionCounter++,
     };
+
+    if (this.state.transactionType == "Credit")
+      transaction.amount = this.state.credit;
+
+    if (this.state.transactionType == "Charge")
+      transaction.amount = this.state.charge;
 
     const result2 = await API.graphql(
       graphqlOperation(createTransaction, { input: transaction })
+    );
+
+    const input2 = {
+      id: this.state.member.id,
+      transactionCounter: this.state.member.transactionCounter,
+      owner: this.state.member.owner,
+    };
+
+    const result3 = await API.graphql(
+      graphqlOperation(updateMember, { input: input2 })
     );
   };
 
@@ -199,10 +217,12 @@ class App extends Component {
     const allTransactions = await API.graphql(
       graphqlOperation(listTransactions)
     );
-    const transactionOfCurrentUser = allTransactions.data.listTransactions.items.filter(
-      (x) =>
-        x.name == this.state.member.name && x.owner == this.state.member.owner
-    );
+    const transactionOfCurrentUser = allTransactions.data.listTransactions.items
+      .filter(
+        (x) =>
+          x.name == this.state.member.name && x.owner == this.state.member.owner
+      )
+      .sort((a, b) => b.order - a.order);
 
     this.setState({ transactions: transactionOfCurrentUser });
   };
@@ -234,7 +254,7 @@ class App extends Component {
     if (this.state.transactionType == "Credit")
       this.state.credit = parseInt(event.target.value);
     if (this.state.transactionType == "Charge")
-      this.state.charge = parseInt(event.target.value);
+      this.state.charge = parseInt(event.target.value) * -1;
   };
 
   onInfoChange = (event) => {
@@ -242,7 +262,6 @@ class App extends Component {
   };
 
   backHomeClicked = () => {
-    alert("sd");
     this.hideAllPages();
     this.showMainPage = true;
     this.setState({ showMainPage: this.showMainPage });

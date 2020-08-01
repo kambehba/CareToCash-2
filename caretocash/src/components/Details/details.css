@@ -1,0 +1,14 @@
+.table {
+  max-width: 650px;
+}
+
+.tableHead {
+  background-color: rgba(7, 1, 7, 0.918);
+  font-weight: bolder;
+}
+
+.tableHeadText {
+  font-weight: bold;
+  font-size: large;
+  color: aliceblue;
+}

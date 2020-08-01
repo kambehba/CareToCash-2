@@ -8,6 +8,7 @@ export const getMember = /* GraphQL */ `
       name
       balance
       owner
+      transactionCounter
       createdAt
       updatedAt
     }
@@ -25,6 +26,7 @@ export const listMembers = /* GraphQL */ `
         name
         balance
         owner
+        transactionCounter
         createdAt
         updatedAt
       }
@@ -39,8 +41,10 @@ export const getTransaction = /* GraphQL */ `
       name
       owner
       amount
+      endingBalance
       info
       date
+      order
       createdAt
       updatedAt
     }
@@ -58,8 +62,10 @@ export const listTransactions = /* GraphQL */ `
         name
         owner
         amount
+        endingBalance
         info
         date
+        order
         createdAt
         updatedAt
       }
