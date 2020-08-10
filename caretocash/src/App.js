@@ -131,8 +131,8 @@ class App extends Component {
     this.sendUpdate();
     this.state.newMember = "";
     this.setState({
-      showMainPage: this.state.showMainPage,
-      showTransactionPage: this.state.showTransactionPage,
+      showMainPage: true,
+      showTransactionPage: false,
       newMember: this.state.newMember,
       credit: this.state.credit,
       charge: this.state.charge,
