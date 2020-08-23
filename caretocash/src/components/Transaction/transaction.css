@@ -1,16 +1,7 @@
-.sendButton {
-  margin-left: 8rem;
-  align-self: center;
-  width: 450px;
-  margin-top: 20px;
-}
-
 .inputBox {
   color: green;
   font-weight: bold;
   font-size: x-large;
-  margin-top: 1.5rem;
-  width: 250px;
 }
 
 .memberName {
@@ -19,21 +10,42 @@
 }
 
 .dollarSign {
-  color: green;
+  color: rgb(58, 128, 0);
   font-size: xx-large;
-  margin-left: 8rem;
-  margin-top: 1rem;
   font-weight: bolder;
+  margin-top: 20px;
 }
 
 .transactioType {
-  margin-left: 2rem;
+  margin-left: 1rem;
 }
 
 .info {
-  margin-left: 8rem;
   color: blue;
-  margin-top: 2rem;
-  width: 450px;
   font-weight: bold;
+  margin-left: 2rem;
+  width: 250px;
+  height: 80px;
+  font-size: x-large;
+}
+
+.s2 {
+  width: 9rem;
+  margin: 1rem;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.f1 {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.f1 > div {
+  margin: 10px;
+  align-items: center;
 }

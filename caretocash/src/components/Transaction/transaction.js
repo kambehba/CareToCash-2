@@ -19,50 +19,64 @@ const useStyles = makeStyles((theme) => ({
 function Transaction(props) {
   const classes = useStyles();
   return (
-    <Grid container className={classes.grid}>
-      <Grid item xs={1}></Grid>
-      <Grid item xs={1}>
-        <h1 className="transactioType"> {props.transactionType}</h1>
-      </Grid>
-      <Grid item xs={1}>
-        <h1 className="memberName"> {props.name}</h1>
-      </Grid>
-      <Grid item xs={9}></Grid>
+    <div className="flex-container">
+      <div className="f1">
+        <div>
+          <h2 className="transactioType"> {props.transactionType} for :</h2>
+        </div>
+        <div>
+          <h2 className="memberName"> {props.name}</h2>
+        </div>
+      </div>
 
-      <Grid item xs={1}>
-        <div className="dollarSign">$</div>
-      </Grid>
+      <div className="f1">
+        <div>
+          <p className="dollarSign">$</p>
+        </div>
+        <div>
+          <input
+            className="inputBox"
+            type="number"
+            placeholder="Enter Amount"
+            value={props.intialInput}
+            onChange={(event) => props.onInputChange(event)}
+          />
+        </div>
+      </div>
 
-      <Grid item xs={1}>
-        <input
-          className="inputBox"
-          type="number"
-          placeholder="Enter Amount"
-          value={props.intialInput}
-          onChange={(event) => props.onInputChange(event)}
-        />
-      </Grid>
-      <Grid item xs={10}></Grid>
+      <div className="f1">
+        <div>
+          <textarea
+            rows="3"
+            className="info"
+            type="text"
+            placeholder="Reason for this Transaction ?"
+            value={props.info}
+            onChange={(event) => props.onInfoChange(event)}
+          />
+        </div>
+      </div>
 
-      <Grid item xs={10}>
-        <input
-          className="info"
-          type="text"
-          placeholder="Reason for this Transaction ?"
-          value={props.info}
-          onChange={(event) => props.onInfoChange(event)}
-        />
-      </Grid>
+      <div className="f1">
+        <div>
+          <button
+            className="s2 btn btn-success"
+            onClick={() => props.sendClick(props.transactionType)}
+          >
+            Send
+          </button>
+        </div>
 
-      <Grid item xs={10}>
-        <button
-          className="btn btn-success sendButton"
-          onClick={() => props.sendClick(props.transactionType)}
-        >
-          Send
-        </button>
-      </Grid>
-    </Grid>
+        <div>
+          <button
+            className="s2 btn btn-danger"
+            onClick={() => props.cancelClick()}
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
 

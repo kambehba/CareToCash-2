@@ -76,7 +76,7 @@ class App extends Component {
     const newMember = {
       name: this.state.newMember,
       owner: this.state.member.owner,
-      balance: this.state.member.balance,
+      balance: 0,
       transactionCounter: 0,
     };
 
@@ -113,6 +113,11 @@ class App extends Component {
       (m) => m.id !== result2.data.deleteMember.id
     );
     this.setState({ members: updatedMembers });
+  };
+
+  cancelTransaction = () => {
+    this.hideAllPages();
+    this.setState({ showMainPage: true });
   };
 
   sendTransaction = (transactionType) => {
@@ -306,6 +311,7 @@ class App extends Component {
             name={this.state.member.name}
             transactionType={this.state.transactionType}
             sendClick={this.sendTransaction}
+            cancelClick={this.cancelTransaction}
             onInputChange={this.onInputChange}
             onInfoChange={this.onInfoChange}
           />
@@ -327,9 +333,6 @@ class App extends Component {
     return (
       <div>
         <div className="flex flex-column items-center justify-center pa3 bg-washed-yellow b--hot-pink">
-          {/* <h1 className="f1 dark-blue lh-solid">
-            CARE to CA<span style="color:green">$</span>H
-          </h1> */}
           <h1 className="f1 dark-blue lh-solid">
             CARE to CA<span className="s1">$</span>H
           </h1>
