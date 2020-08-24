@@ -1,23 +1,7 @@
 import React from "react";
 import "../Transaction/transaction.css";
 
-import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Paper } from "@material-ui/core";
-
-const useStyles = makeStyles((theme) => ({
-  grid: {
-    width: "100%",
-    margin: "0px",
-  },
-
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: "center",
-  },
-}));
-
 function Transaction(props) {
-  const classes = useStyles();
   return (
     <div className="flex-container">
       <div className="f1">
