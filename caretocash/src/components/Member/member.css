@@ -24,16 +24,6 @@
   margin: 1rem;
 }
 
-.balanceSignNegative {
-  color: red;
-  font-size: x-large;
-}
-
-.balanceSignPositive {
-  color: green;
-  font-size: x-large;
-}
-
 .memberContainer {
   display: flex;
   margin: 1rem;

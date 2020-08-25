@@ -322,10 +322,10 @@ class App extends Component {
     if (this.state.showDetailsPage) {
       details = (
         <div className="flex flex-column items-left pa5">
-          <Details
-            transactions={this.state.transactions}
-            backHomeClicked={this.backHomeClicked}
-          ></Details>
+          <button className="btn btn-danger" onClick={this.backHomeClicked}>
+            Back
+          </button>
+          <Details transactions={this.state.transactions}></Details>
         </div>
       );
     }

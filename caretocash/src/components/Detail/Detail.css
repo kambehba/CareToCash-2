@@ -1,0 +1,12 @@
+.detailContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  margin-right: 5rem;
+  width: 250px;
+  align-items: center;
+}
+
+.s1 {
+  color: crimson;
+}
