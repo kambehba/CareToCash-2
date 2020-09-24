@@ -57,6 +57,10 @@ class App extends Component {
     this.loadMembers();
   }
 
+  playCashRegisterSound = () => {
+    document.getElementById("a1").play();
+  };
+
   async loadMembers() {
     //first get Authenticated User
     const currentUser = await Auth.currentUserInfo();
@@ -144,6 +148,7 @@ class App extends Component {
       members: this.state.members,
       member: this.state.member,
     });
+    this.playCashRegisterSound();
   };
 
   openDetailsByMemberId = (id) => {
@@ -297,7 +302,7 @@ class App extends Component {
             onChange={this.setMember}
           />
           <br></br>
-          <button onClick={this.addMemberHandler} className="btn-primary">
+          <button onClick={this.addMemberHandler} className="btn-primary s5">
             Add a Member
           </button>
         </div>
@@ -332,8 +337,11 @@ class App extends Component {
 
     return (
       <div>
-        <div className="flex flex-column items-center justify-center pa3 bg-washed-yellow b--hot-pink">
-          <h1 className="f1 dark-blue lh-solid">
+        <audio id="a1">
+          <source src="audio/a1.mp3" type="audio/mpeg"></source>
+        </audio>
+        <div className="flex flex-column items-center justify-center pa3 bg-black b--hot-pink">
+          <h1 className="f1 white lh-solid">
             CARE to CA<span className="s1">$</span>H
           </h1>
         </div>

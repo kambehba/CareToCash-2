@@ -23,9 +23,9 @@ const Member = (props) => {
         <button className="btn btn-warning b1" onClick={props.detailsClicked}>
           Details
         </button>
-        <button className="btn btn-dark b1" onClick={props.deleteClicked}>
+        {/* <button className="btn btn-dark b1" onClick={props.deleteClicked}>
           Delete Members
-        </button>
+        </button> */}
       </div>
     </Paper>
   );
