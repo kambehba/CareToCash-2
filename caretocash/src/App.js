@@ -219,15 +219,25 @@ class App extends Component {
   };
 
   getTransactionsByMember = async () => {
+    // const allTransactions = await API.graphql(
+    //   graphqlOperation(listTransactions)
+    // );
     const allTransactions = await API.graphql(
-      graphqlOperation(listTransactions)
+      {
+        query: listTransactions,
+        variables: {
+          limit: 1000
+        }
+      }
     );
+    console.log(allTransactions.data.listTransactions.items);
     const transactionOfCurrentUser = allTransactions.data.listTransactions.items
       .filter(
         (x) =>
           x.name == this.state.member.name && x.owner == this.state.member.owner
       )
       .sort((a, b) => b.order - a.order);
+   
 
     this.setState({ transactions: transactionOfCurrentUser });
   };
